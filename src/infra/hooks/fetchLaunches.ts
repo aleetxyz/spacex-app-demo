@@ -1,13 +1,12 @@
 import { useQuery } from "@apollo/client"
 
 import { getPastLaunches, PastLaunchesQueryError } from "../queries/getPastLaunches"
-
 import { 
-  mapLaunchData, 
-  LaunchDTO, 
+  mapLaunchData,  
   LaunchDataTypeInputs, 
   LaunchDataTypeOutputs 
 } from "../types/LaunchDataType"
+import { Launch } from "../../types/data/Launch.dto"
 
 type LaunchFetcherHookProps = {
   limit: number
@@ -17,13 +16,13 @@ const CONSTANTS: LaunchFetcherHookProps = {
   limit: 5
 }
 
-function useLaunchFecther ({ limit }: LaunchFetcherHookProps) {
+function useLaunchesFetcher ({ limit }: LaunchFetcherHookProps) {
   const { loading, error, data } = useQuery<LaunchDataTypeOutputs, LaunchDataTypeInputs>(
     getPastLaunches, { variables: { limit: limit || CONSTANTS.limit } }
   );
 
   if (loading) {
-    return new Array<LaunchDTO>();
+    return new Array<Launch>();
   }
   
   if (error) { 
@@ -33,4 +32,4 @@ function useLaunchFecther ({ limit }: LaunchFetcherHookProps) {
   return data?.launchesPast.map(mapLaunchData);
 }
 
-export default useLaunchFecther
+export default useLaunchesFetcher

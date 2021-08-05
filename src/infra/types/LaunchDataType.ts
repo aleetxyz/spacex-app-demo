@@ -1,3 +1,5 @@
+import { Launch } from "../../types/data/Launch.dto";
+
 type LaunchDataType = {
   mission_name: string;
   launch_date_local: Date;
@@ -21,19 +23,10 @@ type LaunchDataTypeOutputs = {
   launchesPast: Array<LaunchDataType>;
 };
 
-type LaunchDTO = {
-  mission: string;
-  timestamp: Date;
-  site: string;
-  articleLink: string;
-  imageLinks: Array<string>
-  rocketName: string
-}
-
-function mapLaunchData(launchResult: LaunchDataType): LaunchDTO {
+function mapLaunchData(launchResult: LaunchDataType): Launch {
   return {
     mission: launchResult.mission_name,
-    timestamp: launchResult.launch_date_local,
+    date: launchResult.launch_date_local,
     site: launchResult.launch_site.site_name_long,
     articleLink: launchResult.links.article_link,
     imageLinks: launchResult.links.flickr_images,
@@ -43,7 +36,6 @@ function mapLaunchData(launchResult: LaunchDataType): LaunchDTO {
 
 export { 
   mapLaunchData, 
-  LaunchDTO, 
   LaunchDataTypeInputs, 
   LaunchDataTypeOutputs 
 }

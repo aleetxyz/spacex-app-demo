@@ -1,28 +1,32 @@
-import { LaunchDTO } from "infra/types/LaunchDataType";
-import React from "react"
-import { FlatList, Text, View } from 'react-native';
+import React, { useEffect } from "react"
+import { View } from 'react-native';
 
+import useLaunchesFecther from "../../infra/hooks/fetchLaunches";
+import useLaunchesViewModel from "../../hooks/Launches.vm";
 
-import useLaunchFecther from "../../infra/hooks/useLaunchFetcher";
+import LaunchListItem from "../../components/LaunchListItem";
+import ListSorterMenu from "../../components/ListSorterMenu";
 
-interface DetaildProps {
-  navigation: any;
-  route: any;
-}
+export default function LaunchPage() {
+  const fetchedLaunches = useLaunchesFecther({ limit: 3 })
+  const [ launchesVM, operations ] = useLaunchesViewModel({ 
+    launches: fetchedLaunches 
+  })
 
-export default function LaunchPage({ navigation, route }: DetaildProps) {
-  const launches: Array<LaunchDTO> = [];
+  useEffect(() => {
+    operations.orderByRecent()
+  }, [launchesVM.length])
 
-  try {
-    const result = useLaunchFecther({ limit: 10 })
-    launches.push(...result)
-  } catch (error) {
-    //handleError
+  const renderListItem = () => {
+    return launchesVM.map((element, idx) => (
+      <LaunchListItem key={idx} {...element} />
+    ))
   }
 
   return (
-    <View>
-      
+    <View style={{ flexDirection: "column-reverse" }}>
+      { renderListItem() }
+      <ListSorterMenu {...operations} />
     </View>
   );
 };
