@@ -1,10 +1,19 @@
+import { relative } from "path/posix";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   ["page-wrap"]: {
     backgroundColor: "white",
+    position: "relative",
     margin: 8,
-    padding: 8
+    padding: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.84,
   },
   ["title"]: {
     fontSize: 24,

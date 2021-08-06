@@ -2,12 +2,10 @@ import React from "react"
 import { View, Image, Text } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 
-import { Launch } from "../../types/data/Launch.dto";
-
 import fallback from "../../../assets/icon.png"
 import style from "./index.style"
 
-export default function LaunchListItem(props: Launch) {
+export default function LaunchListItem(props) {
   const navigation = useNavigation();
 
   return (

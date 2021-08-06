@@ -3,16 +3,17 @@ import { FlatList, Text, Image, View } from 'react-native';
 
 import { Launch } from '../../types/data/Launch.dto';
 
+import ItemFavorite from "../../components/ItemFavorite"
 import fallback from "../../../assets/icon.png"
 import styles from './index.style';
 
-export default function LaunchDetail (props) {
+export default function LaunchDetail(props) {
   const launch = props.route.params as Launch
 
   const renderImage = ({ item }) => (
-    <Image 
-      style={styles["image"]} 
-      source={{ uri: item }} 
+    <Image
+      style={styles["image"]}
+      source={{ uri: item }}
       defaultSource={fallback}
     />
   )
@@ -40,6 +41,11 @@ export default function LaunchDetail (props) {
         {`Launched at: `}
         <Text style={styles["text-info"]}>{launch.site}</Text>
       </Text>
+      <ItemFavorite
+        id={launch.mission}
+        style={
+          { position: "absolute", right: 0, top: "98%" }
+        } />
     </View>
   );
 };
